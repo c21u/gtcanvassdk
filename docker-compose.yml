@@ -1,0 +1,44 @@
+version: '2.4'
+services:
+  canvas:
+    image: c21u/canvasdev
+    environment:
+      VIRTUAL_HOST: "canvas.127.0.0.1.nip.io"
+    expose:
+      - "3000"
+    volumes:
+      - canvasdb:/var/lib/postgresql/12/main
+    labels:
+      - "traefik.http.routers.canvas.rule=Host(`canvas.127.0.0.1.nip.io`)"
+      - "traefik.http.routers.canvas.tls=true"
+
+  postgres:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    labels:
+      - "traefik.tcp.services.postgres.loadbalancer.server.port=5432"
+      - "traefik.tcp.routers.postgres.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.postgres.entrypoints=postgres"
+      - "traefik.tcp.routers.postgres.service=postgres"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  reverse-proxy:
+    image: traefik:v2.0
+    ports:
+      - "80:80"
+      - "443:443"
+      - "5432:5432"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - $HOME/certs:/data/traefik:ro
+      - ./traefik:/etc/traefik:ro
+
+volumes:
+  postgres_data:
+  canvasdb:

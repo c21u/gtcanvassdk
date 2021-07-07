@@ -1,0 +1,15 @@
+account_id,parent_account_id,name,status
+A,,College of Design,active
+C,,College of Computing,active
+D,,Georgia Tech Professional Education,active
+D/LI,D,Language Institute,active
+D/PD,D,Professional Development,active
+D/OP,D,Online Programs,active
+D/SH,D,Shenzhen,active
+E,,College of Engineering,active
+I,,Ivan Allen College,active
+M,,Scheller College of Business,active
+R,,College of Registrar,active
+R/GT1K,R,GT1000-2000,active
+S,,College of Sciences,active
+UU,,Unassigned,active
