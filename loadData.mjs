@@ -3,11 +3,11 @@ import fetch from "make-fetch-happen";
 import path from "path";
 import FormData from "form-data";
 import fs from "fs";
+import Minipass from "minipass";
 import { readdir } from "fs/promises";
 import { fileURLToPath } from "url";
 
-const url =
-  "https://canvas.127.0.0.1.nip.io/api/v1/accounts/2/sis_imports?extension=zip";
+const url = "https://canvas.127.0.0.1.nip.io/api/v1/accounts/2/sis_imports";
 
 const archive = archiver("zip");
 
@@ -23,13 +23,17 @@ archive.on("error", function (err) {
   throw err;
 });
 
+const outStream = new Minipass();
+archive.pipe(outStream);
+
 const form = new FormData();
-form.append("attachment", archive);
+form.append("attachment", outStream, {
+  filename: "canvas.zip",
+});
 const options = {
   method: "POST",
   headers: form.getHeaders({
     Authorization: "Bearer canvas-docker",
-    "Content-Type": "application/zip",
   }),
   body: form,
 };
@@ -41,6 +45,6 @@ readdir(dataDir).then((files) => {
   );
   archive.finalize();
   fetch(url, options)
-    .then((res) => console.log(JSON.stringify(res.json)))
+    .then((res) => console.log("Success"))
     .catch((err) => console.error(err));
 });
