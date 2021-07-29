@@ -1,7 +1,7 @@
 {
   "url": "https://dev.127.0.0.1.nip.io",
   "consumer_key": "dev",
-  "shared_secret": "dev",
+  "shared_secret": "devsecret",
   "name": "DEV",
   "description": "",
   "allow_membership_service_access": true,
