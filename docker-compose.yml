@@ -11,6 +11,11 @@ services:
     labels:
       - "traefik.http.routers.canvas.rule=Host(`canvas.127.0.0.1.nip.io`)"
       - "traefik.http.routers.canvas.tls=true"
+      - "traefik.http.routers.canvas.entrypoints=https"
+      - "traefik.http.routers.canvashttp.rule=Host(`canvas.127.0.0.1.nip.io`)"
+      - "traefik.http.routers.canvashttp.entrypoints=http"
+      - "traefik.http.middlewares.canvas-redirect-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.canvashttp.middlewares=canvas-redirect-https"
 
   postgres:
     image: postgres
