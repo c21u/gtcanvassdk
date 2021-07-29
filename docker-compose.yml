@@ -32,6 +32,14 @@ services:
       timeout: 5s
       retries: 5
 
+  ltitool:
+    build: ./src
+    labels:
+      - "traefik.http.routers.ltitool.rule=Host(`dev.127.0.0.1.nip.io`)"
+      - "traefik.http.routers.ltitool.tls=true"
+      - "traefik.http.routers.ltitool.entrypoints=https"
+
+
   reverse-proxy:
     image: traefik:v2.0
     ports:
