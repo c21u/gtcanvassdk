@@ -4,6 +4,7 @@ services:
     image: c21u/canvasdev
     environment:
       VIRTUAL_HOST: "canvas.127.0.0.1.nip.io"
+      ADDITIONAL_ALLOWED_HOSTS: "canvas"
     expose:
       - "3000"
     volumes:
