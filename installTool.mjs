@@ -2,9 +2,6 @@ import fetch from "make-fetch-happen";
 import path from "path";
 import { readFile } from "fs/promises";
 import { URLSearchParams, fileURLToPath } from "url";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 const serialize = (obj, prefix) => {
   const str = [];
