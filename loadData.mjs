@@ -6,6 +6,9 @@ import fs from "fs";
 import Minipass from "minipass";
 import { readdir } from "fs/promises";
 import { fileURLToPath } from "url";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const url = "https://canvas.127.0.0.1.nip.io/api/v1/accounts/2/sis_imports";
 
