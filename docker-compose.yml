@@ -7,7 +7,7 @@ services:
     expose:
       - "3000"
     volumes:
-      - canvasdb:/var/lib/postgresql/12/main
+      - canvasdb:/var/lib/postgresql/17/main
     labels:
       - "traefik.http.routers.canvas.rule=Host(`canvas.127.0.0.1.nip.io`)"
       - "traefik.http.routers.canvas.tls=true"
@@ -43,7 +43,7 @@ services:
 
 
   reverse-proxy:
-    image: traefik:v2.5
+    image: traefik:v3.2
     ports:
       - "80:80"
       - "443:443"
