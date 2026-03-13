@@ -16,6 +16,8 @@ services:
       - "traefik.http.routers.canvashttp.entrypoints=http"
       - "traefik.http.middlewares.canvas-redirect-https.redirectscheme.scheme=https"
       - "traefik.http.routers.canvashttp.middlewares=canvas-redirect-https"
+    networks:
+      - gtcanvassdk
 
   postgres:
     image: postgres
@@ -33,6 +35,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - gtcanvassdk
 
   ltitool:
     build: ./src
@@ -40,7 +44,8 @@ services:
       - "traefik.http.routers.ltitool.rule=Host(`dev.127.0.0.1.nip.io`)"
       - "traefik.http.routers.ltitool.tls=true"
       - "traefik.http.routers.ltitool.entrypoints=https"
-
+    networks:
+      - gtcanvassdk
 
   reverse-proxy:
     image: traefik:v3.2
@@ -53,7 +58,16 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - $HOME/certs:/data/traefik:ro
       - ./traefik:/etc/traefik:ro
+    networks:
+      gtcanvassdk:
+        aliases:
+          - canvas.127.0.0.1.nip.io
+          - dev.127.0.0.1.nip.io
 
 volumes:
   postgres_data:
   canvasdb:
+
+networks:
+  gtcanvassdk:
+    driver: bridge
