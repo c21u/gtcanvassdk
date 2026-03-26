@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 
 const url = "https://canvas.127.0.0.1.nip.io/api/v1/accounts/1/sis_imports";
 
-const archive = archiver("zip", {zlib: {level: 9}});
+const archive = archiver("zip", { zlib: { level: 9 } });
 
 archive.on("warning", function (err) {
   if (err.code === "ENOENT") {
@@ -19,27 +19,22 @@ archive.on("error", function (err) {
   throw err;
 });
 
-archive.pipe(blobStream()).on("finish", async function() {
+archive.pipe(blobStream()).on("finish", async function () {
   const blob = this.toBlob();
 
   const options = {
     method: "POST",
     headers: {
       Authorization: "Bearer canvas-docker",
-      "Content-Type": "application/zip"
+      "Content-Type": "application/zip",
+      "User-Agent": "node fetch",
     },
-    /*body: {
-    [Symbol.toStringTag]: "File",
-    name: "canvas.zip",
-    type: "application/zip",
-    stream: () => archive,
-  },*/
     body: blob,
   };
 
   const res = await fetch(url, options);
   console.log("Success", await res.text());
-})
+});
 
 const dataDir = path.join(path.dirname(fileURLToPath(import.meta.url)), "data");
 archive.directory(dataDir, false);
