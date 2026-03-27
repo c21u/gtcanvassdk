@@ -6,7 +6,7 @@ export default [
   {
     ...eslint.configs.recommended,
     files: ["**/*.js"],
-    ignores: ["dist/*", "src/*"],
+    ignores: ["src/**"],
     rules: {
       "no-undef": "error",
     },

@@ -44,6 +44,10 @@ services:
       - "traefik.http.routers.ltitool.rule=Host(`dev.127.0.0.1.nip.io`)"
       - "traefik.http.routers.ltitool.tls=true"
       - "traefik.http.routers.ltitool.entrypoints=https"
+    develop:
+      watch:
+        - action: rebuild
+          path: src
     networks:
       - gtcanvassdk
 
