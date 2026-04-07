@@ -11,4 +11,4 @@ GT Canvas SDK requires the following:
 
 ## Installation & Configuration
 
-[The wiki contains detailed setup instructions](https://github.gatech.edu/C21U/gtcanvassdk/wiki).
+[The wiki contains detailed setup instructions](https://github.com/c21u/gtcanvassdk/wiki).
